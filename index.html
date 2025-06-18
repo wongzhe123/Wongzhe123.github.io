@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kumpulan Rekomendasi Produk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .kategori {
+      display: none;
+    }
+
+    .kategori.active {
+      display: block;
+    }
+
+    ol {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    li a {
+      color: #0645AD; /* Warna default link browser */
+      text-decoration: none;
+    }
+
+    li a:visited {
+      color: #551A8B; /* Warna link setelah diklik */
+    }
+
+    li a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #888;
+      border-top: 1px solid #ddd;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Kumpulan Rekomendasi Produk</h1>
+
+  <nav>
+    <a href="#" onclick="tampilKategori('gerinda')">Gerinda</a>
+    <a href="#" onclick="tampilKategori('dinamo')">Dinamo Jahit</a>
+    <a href="#" onclick="tampilKategori('alat')">Alat & Sparepart</a>
+    <a href="#" onclick="tampilKategori('lain')">Lain-lain</a>
+  </nav>
+
+  <div id="gerinda" class="kategori active">
+    <ol>
+
+
+
+
+
+
+    <li><a href="https://vt.tokopedia.com/t/ZSkqGN9JA/
+" target="_blank">👉HLG105 VS 5 variabel kecepatan Bisa COD– Tahan Banting, Cocok Harian</a></li>
+    <li><a href="https://vt.tokopedia.com/t/ZSkqtoTdb/" target="_blank">👉HLG105 VS Toko Oficial H&L 5 variabel kecepatan – Tahan Banting, Cocok Harian</a></li>
+  <li><a href="https://vt.tokopedia.com/t/ZSkqWCV7r/" target="_blank">👉APR TYPE AP132 PRO GARANSI RESMI 5THN KUALITAS DIATAS M4KITA</a></li>
+  <li><a href="https://vt.tokopedia.com/t/ZSkq7PPyb/" target="_blank">👉MODERN type Tangguh M-2350B </a></li>
+  <li><a href="https://vt.tokopedia.com/t/ZSkqWwQye/" target="_blank">👉Termurah MAILTANK SH01  – Cocok Buat Pemula & Hobi</a></li>
+    </ol>
+  </div>
+
+  <div id="dinamo" class="kategori">
+    <ol>
+      <li><a href="https://vt.tokopedia.com/t/ZSkqcN1qn/">Dinamo Hemat Listrik Servo Mesin Jahit Yuasa TH-550 DA-EA / TH-550 B / TH-550 AA</a></li>
+    </ol>
+  </div>
+
+  <div id="alat" class="kategori">
+    <ol>
+      <li><a href="#">Kunci L Set untuk Servis Dinamo</a></li>
+    </ol>
+  </div>
+
+  <div id="lain" class="kategori">
+    <ol>
+      <li><a href="#">Lampu Meja Tukang Jahit</a></li>
+    </ol>
+  </div>
+
+  <footer>
+    <p>📦 Kumpulan Produk Rekomendasi — Dirakit oleh Tangan Tukang 🔧</p>
+    <p>💡 Beli sesuai kebutuhan, hemat tanpa ragu 💸</p>
+    <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
+  </footer>
+
+  <script>
+    function tampilKategori(id) {
+      const semuaKategori = document.querySelectorAll('.kategori');
+      semuaKategori.forEach(k => k.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
