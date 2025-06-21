@@ -67,9 +67,10 @@ function putarPromo() {
 }
 
 // Hitung kunjungan menggunakan CounterAPI.dev
-// Ganti script hit kunjungan pack
-fetch('https://counterapi.dev/up/wongzhe123-linkbio')
+fetch('https://api.counterapi.dev/v1/wongzhe123-linkbio/visits/up')
   .then(res => res.json())
   .then(data => {
-    document.getElementById('pageviews').textContent = data.data.toLocaleString();
-  });
+    document.getElementById('pageviews')
+      .textContent = data.value.toLocaleString('id-ID');
+  })
+  .catch(console.error);
