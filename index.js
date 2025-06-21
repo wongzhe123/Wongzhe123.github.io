@@ -67,16 +67,12 @@ function putarPromo() {
 }
 
 // Kirim kunjungan ke Google Apps Script
-fetch('https://script.google.com/macros/s/AKfycbwlzi0bzSZB38mrjynADCE1sOIev2Juy61AbrCsbVEhnHy-RXpJ3GPZvEbchmADSLqs/exec')
+fetch('https://script.google.com/macros/s/AKfycbwGED-IaC1em48ctm-2BbQ7HdTjUmF78iyhjzdEQNB2qv6Su2Jiir4967cJS65I-Y8MIA/exec')
   .then(res => res.json())
   .then(data => {
-    if (data && data.jumlah) {
-      document.getElementById('pageviews').textContent = data.jumlah.toLocaleString('id-ID');
-    } else {
-      document.getElementById('pageviews').textContent = 'Gagal ambil data';
-    }
+    document.getElementById('pageviews').textContent =
+      data.jumlah.toLocaleString('id-ID');
   })
-  .catch(err => {
-    console.error('Gagal:', err);
+  .catch(() => {
     document.getElementById('pageviews').textContent = 'Gagal memuat';
   });
