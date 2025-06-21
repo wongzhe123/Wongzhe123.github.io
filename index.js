@@ -67,10 +67,10 @@ function putarPromo() {
 }
 
 // Hitung kunjungan menggunakan CounterAPI.dev
-fetch('https://api.counterapi.dev/v1/wongzhe123-linkbio/visits/up')
+fetch('https://counterapi.dev/up/wongzhe123-linkbio/kunjungan')
   .then(res => res.json())
   .then(data => {
-    document.getElementById('pageviews')
-      .textContent = data.value.toLocaleString('id-ID');
+    document.getElementById('pageviews').textContent =
+      data.jumlah.toLocaleString('id-ID'); // ambil dari "jumlah"
   })
   .catch(console.error);
