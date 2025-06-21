@@ -66,14 +66,17 @@ function putarPromo() {
   }
 }
 
-// Hitung kunjungan menggunakan CounterAPI.dev
-// Hitung total kunjungan menggunakan CounterAPI
-fetch('https://counterapi.dev/up/wongzhe123githubio')
+// Kirim kunjungan ke Google Apps Script
+fetch('https://script.google.com/macros/s/AKfycbwlzi0bzSZB38mrjynADCE1sOIev2Juy61AbrCsbVEhnHy-RXpJ3GPZvEbchmADSLqs/exec')
   .then(res => res.json())
   .then(data => {
-    // Jika properti bernama 'jumlah', tampilkan; fallback ke 0
-    const total = data.jumlah ?? 0;
-    document.getElementById('pageviews').textContent =
-      total.toLocaleString('id-ID');
+    if (data && data.jumlah) {
+      document.getElementById('pageviews').textContent = data.jumlah.toLocaleString('id-ID');
+    } else {
+      document.getElementById('pageviews').textContent = 'Gagal ambil data';
+    }
   })
-  .catch(error => console.error('Gagal ambil data counter:', error));
+  .catch(err => {
+    console.error('Gagal:', err);
+    document.getElementById('pageviews').textContent = 'Gagal memuat';
+  });
