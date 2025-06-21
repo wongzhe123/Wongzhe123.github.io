@@ -67,10 +67,13 @@ function putarPromo() {
 }
 
 // Hitung kunjungan menggunakan CounterAPI.dev
+// Hitung total kunjungan menggunakan CounterAPI
 fetch('https://counterapi.dev/up/wongzhe123githubio')
   .then(res => res.json())
   .then(data => {
+    // Jika properti bernama 'jumlah', tampilkan; fallback ke 0
+    const total = data.jumlah ?? 0;
     document.getElementById('pageviews').textContent =
-      data.jumlah.toLocaleString('id-ID');
+      total.toLocaleString('id-ID');
   })
-  .catch(console.error);
+  .catch(error => console.error('Gagal ambil data counter:', error));
