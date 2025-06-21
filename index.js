@@ -66,6 +66,11 @@ function putarPromo() {
   }
 }
 
-
+// Hitung kunjungan menggunakan CounterAPI
+fetch("https://api.countapi.xyz/hit/wongzhe123.github.io/index")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("pageviews").innerText = data.value.toLocaleString();
+  });
 
 
