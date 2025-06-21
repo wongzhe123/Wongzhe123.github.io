@@ -67,10 +67,10 @@ function putarPromo() {
 }
 
 // Hitung kunjungan menggunakan CounterAPI
-fetch("https://api.countapi.xyz/hit/wongzhe123.github.io/index")
+fetch('https://api.countapi.xyz/hit/wongzhe123-linkbio/visits')
   .then(res => res.json())
   .then(data => {
-    document.getElementById("pageviews").innerText = data.value.toLocaleString();
-  });
-
+    document.getElementById('pageviews').textContent = data.value.toLocaleString('id-ID');
+  })
+  .catch(console.error);
 
