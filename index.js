@@ -53,7 +53,7 @@ fetch('data.json')
 
 // Fungsi untuk mencatat ke Google Sheet
 function kirimLog(kodeKategori, nomor = null) {
-  const url = `https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec` +
+  const url = `https://script.google.com/macros/s/AKfycbw1Wp0uSlcx36yV2kYXzeFSDoVtCk7qTWIvFdP_22E0pnJYoSRSIbsB4k9D0pmdhsoO/exec` +
     `?cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
   fetch(url).catch(console.error);
 }
