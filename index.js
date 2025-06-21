@@ -66,11 +66,10 @@ function putarPromo() {
   }
 }
 
-// Hitung kunjungan menggunakan CounterAPI
-fetch('https://api.countapi.xyz/hit/wongzhe123-linkbio/visits')
+// Hitung kunjungan menggunakan CounterAPI.dev
+// Ganti script hit kunjungan pack
+fetch('https://counterapi.dev/up/wongzhe123-linkbio')
   .then(res => res.json())
   .then(data => {
-    document.getElementById('pageviews').textContent = data.value.toLocaleString('id-ID');
-  })
-  .catch(console.error);
-
+    document.getElementById('pageviews').textContent = data.data.toLocaleString();
+  });
