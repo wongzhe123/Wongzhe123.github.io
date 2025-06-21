@@ -67,7 +67,7 @@ function putarPromo() {
 }
 
 // Hitung kunjungan menggunakan CounterAPI.dev
-fetch('https://counterapi.dev/up/wongzhe123')
+fetch('https://counterapi.dev/up/wongzhe123.github.io')
   .then(res => res.json())
   .then(data => {
     document.getElementById('pageviews').textContent =
