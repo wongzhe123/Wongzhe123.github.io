@@ -1,15 +1,3 @@
-// Buat ID unik dan simpan di localStorage
-let userId = localStorage.getItem('userId');
-if (!userId) {
-  userId = 'UID-' + Math.random().toString(36).substring(2, 12);
-  localStorage.setItem('userId', userId);
-}
-
-// Catat kunjungan awal (hanya ID) ke Google Sheet
-fetch(`https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}`)
-  .catch(console.error);
-
-
 // Mapping kategori ke huruf
 const kategoriKode = {
   gerinda: 'A',
@@ -65,8 +53,8 @@ fetch('data.json')
 
 // Fungsi untuk mencatat ke Google Sheet
 function kirimLog(kodeKategori, nomor = null) {
-  const url = `https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec` +
-    `?id=${userId}&cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
+  const url = `https://script.google.com/macros/s/AKfycbw1Wp0uSlcx36yV2kYXzeFSDoVtCk7qTWIvFdP_22E0pnJYoSRSIbsB4k9D0pmdhsoO/exec` +
+    `?cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
   fetch(url).catch(console.error);
 }
 
@@ -99,7 +87,7 @@ function putarPromo() {
 }
 
 // Hitung kunjungan dari Google Apps Script
-fetch('https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec')
+fetch('https://script.google.com/macros/s/AKfycbw1Wp0uSlcx36yV2kYXzeFSDoVtCk7qTWIvFdP_22E0pnJYoSRSIbsB4k9D0pmdhsoO/exec')
   .then(res => res.json())
   .then(data => {
     document.getElementById('pageviews').textContent =

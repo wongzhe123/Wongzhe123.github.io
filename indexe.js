@@ -5,11 +5,6 @@ if (!userId) {
   localStorage.setItem('userId', userId);
 }
 
-// Catat kunjungan awal (hanya ID) ke Google Sheet
-fetch(`https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}`)
-  .catch(console.error);
-
-
 // Mapping kategori ke huruf
 const kategoriKode = {
   gerinda: 'A',
