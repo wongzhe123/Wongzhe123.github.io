@@ -48,7 +48,7 @@ fetch('data.json')
           const link = document.createElement('a');
           link.href = produk.url;
           link.target = "_blank";
-          link.textContent = `${i + 1}. ${produk.judul}`;
+         link.textContent = produk.judul;
           
           // Tambahkan pencatatan klik produk
           link.addEventListener('click', () => {
