@@ -1,11 +1,11 @@
-// Buat ID unik
+// Buat ID unik dan simpan di localStorage
 let userId = localStorage.getItem('userId');
 if (!userId) {
   userId = 'UID-' + Math.random().toString(36).substring(2, 12);
   localStorage.setItem('userId', userId);
 }
 
-// Catat kunjungan awal
+// Catat kunjungan awal (hanya ID) ke Google Sheet
 fetch(`https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}`)
   .catch(console.error);
 
@@ -17,9 +17,10 @@ const kategoriKode = {
   lain: 'D'
 };
 
-// Tampilkan kategori aktif
+// Fungsi ganti kategori aktif
 function tampilKategori(id) {
-  document.querySelectorAll('.kategori').forEach(k => k.classList.remove('active'));
+  const semuaKategori = document.querySelectorAll('.kategori');
+  semuaKategori.forEach(k => k.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 
   const klikSound = document.getElementById('klikAudio');
@@ -32,73 +33,76 @@ function tampilKategori(id) {
   if (kode) kirimLog(kode);
 }
 
-// Ambil data dan tampilkan produk
+// Ambil data dari data.json dan render ke halaman
 fetch('data.json')
-  .then(res => res.json())
+  .then(response => response.json())
   .then(data => {
     Object.keys(data).forEach(kategori => {
       const target = document.querySelector(`#${kategori} ol`);
-      if (!target) return;
+      if (target) {
+        data[kategori].forEach((produk, i) => {
+          const item = document.createElement('li');
 
-      // Reset nomor lokal per kategori
-      data[kategori].forEach((produk, i) => {
-        const item = document.createElement('li');
-        const wrapper = document.createElement('div');
-        wrapper.className = 'produk-wrapper';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'produk-wrapper';
 
-        // Link
-        const link = document.createElement('a');
-        link.href = produk.url;
-        link.target = '_blank';
-        link.className = 'judul-produk';
-        link.textContent = produk.judul;
+          const link = document.createElement('a');
+          link.href = produk.url;
+          link.target = "_blank";
+          link.textContent = `${i + 1}. ${produk.judul}`;
+          link.className = 'judul-produk';
 
-        // Log klik link
-        link.addEventListener('click', () => {
-          const kode = kategoriKode[kategori];
-          kirimLog(kode, i + 1);
+          // Tangani klik link
+          link.addEventListener('click', () => {
+            const kode = kategoriKode[kategori];
+            kirimLog(kode, i + 1);
+          });
+
+          // Cek gambar
+          let gambarArray = Array.isArray(produk.gambar) && produk.gambar.length > 0 ?
+            produk.gambar :
+            ['gbS.png'];
+
+          const img = document.createElement('img');
+          img.className = 'thumb-produk';
+          img.src = gambarArray[0];
+          img.alt = produk.judul;
+          img.addEventListener('click', () => bukaPopup(gambarArray));
+
+          wrapper.appendChild(link);
+          wrapper.appendChild(img);
+          item.appendChild(wrapper);
+          target.appendChild(item);
         });
-
-        // Gambar array aman
-        const gambarList = Array.isArray(produk.gambar) && produk.gambar.length > 0
-          ? produk.gambar
-          : ['gbS.png'];
-
-        const img = document.createElement('img');
-        img.className = 'thumb-produk';
-        img.src = gambarList[0];
-        img.alt = produk.judul;
-        img.addEventListener('click', () => bukaPopup(gambarList));
-
-        wrapper.appendChild(link);
-        wrapper.appendChild(img);
-        item.appendChild(wrapper);
-        target.appendChild(item);
-      });
+      }
     });
   });
 
-// Fungsi log klik ke Google Sheet
+// Fungsi mencatat klik ke Google Sheet
 function kirimLog(kodeKategori, nomor = null) {
-  const url = `https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}&cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
+  const url = `https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec` +
+    `?id=${userId}&cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
   fetch(url).catch(console.error);
 }
 
-// Pointer telunjuk
+// Animasi pointer telunjuk
 const pointer = document.getElementById('pointer');
 const kategoriLinks = document.querySelectorAll('nav a');
 let currentIndex = 0;
+
 function gerakkanPointer() {
   const target = kategoriLinks[currentIndex];
   const rect = target.getBoundingClientRect();
-  pointer.style.left = `${rect.left + window.scrollX}px`;
-  pointer.style.top = `${rect.top + window.scrollY - 30}px`;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  pointer.style.left = `${rect.left + scrollLeft}px`;
+  pointer.style.top = `${rect.top + scrollTop - 30}px`;
   currentIndex = (currentIndex + 1) % kategoriLinks.length;
 }
 setInterval(gerakkanPointer, 1500);
 gerakkanPointer();
 
-// Audio promo
+// Suara promo
 function putarPromo() {
   const audio = document.getElementById('promoAudio');
   if (audio) {
@@ -107,11 +111,12 @@ function putarPromo() {
   }
 }
 
-// Kunjungan
+// Hitung kunjungan dari Google Sheet
 fetch('https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec')
   .then(res => res.json())
   .then(data => {
-    document.getElementById('pageviews').textContent = data.jumlah?.toLocaleString('id-ID') || 'Tercatat!';
+    document.getElementById('pageviews').textContent =
+      data.jumlah ? data.jumlah.toLocaleString('id-ID') : 'Tercatat!';
   })
   .catch(() => {
     document.getElementById('pageviews').textContent = 'Gagal memuat';
@@ -151,12 +156,12 @@ function tutupPopup() {
   popup.style.display = 'none';
 }
 
-document.getElementById('prevGambar').onclick = () => {
+// Navigasi gambar
+popup.querySelector('#prevGambar').onclick = () => {
   indeksGambar = (indeksGambar - 1 + semuaGambar.length) % semuaGambar.length;
   tampilkanGambar();
 };
-
-document.getElementById('nextGambar').onclick = () => {
+popup.querySelector('#nextGambar').onclick = () => {
   indeksGambar = (indeksGambar + 1) % semuaGambar.length;
   tampilkanGambar();
 };
