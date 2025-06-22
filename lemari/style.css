@@ -66,6 +66,12 @@ footer {
 }
 
 /* Telunjuk animasi */
+#telunjuk {
+    position: absolute;
+    font-size: 24px;
+    transition: all 0.4s ease-in-out;
+}
+
 .pointer-anim {
   position: absolute;
   font-size: 24px;
@@ -79,16 +85,16 @@ footer {
   to { transform: translateY(-10px); }
 }
 
-/* Speaker animasi */
+
+/*tambah lagi*/
 #speakerWrapper {
     display: inline-block;
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 10;
     text-align: center;
     cursor: pointer;
     width: 30%;
 }
-
 #speakerFloating {
   font-size: 36px;
   animation: goyang 1s infinite;
@@ -116,71 +122,4 @@ footer {
 @keyframes teksNaikTurun {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
-}
-
-/* Struktur gambar kecil di kanan */
-li div.produk-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-li a.judul-produk {
-  flex: 2;
-  text-decoration: none;
-  color: #0645AD;
-  font-weight: bold;
-}
-
-li img.thumb-produk {
-  flex: 1;
-  max-width: 100px;
-  height: auto;
-  object-fit: cover;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* Modal tampilan gambar besar */
-#popupGambar {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.8);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  flex-direction: column;
-}
-
-#popupGambar img {
-  max-width: 90%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-#popupGambar .navigasi-gambar {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  color: white;
-  font-size: 36px;
-  user-select: none;
-  cursor: pointer;
-  padding: 0 20px;
-}
-
-#popupGambar .tutup-popup {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: white;
-  font-size: 28px;
-  cursor: pointer;
 }

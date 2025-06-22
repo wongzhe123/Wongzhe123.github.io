@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kumpulan Rekomendasi Produk</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+   
+<h1>Kumpulan Rekomendasi Produk</h1>
+<br><br>
+<!-- Emoji telunjuk -->
+<div id="pointer" class="pointer-anim">👇</div>
+
+
+  <!-- Navigasi Kategori -->
+  <nav>
+    <a href="#" onclick="tampilKategori('gerinda')">Gerinda</a>
+    <a href="#" onclick="tampilKategori('dinamo')">Dinamo Jahit</a>
+    <a href="#" onclick="tampilKategori('alat')">Alat & Sparepart</a>
+    <a href="#" onclick="tampilKategori('lain')">Lain-lain</a>
+</nav>
+
+ <!-- Tombol Speaker Melayang -->
+  <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
+    <div id="speakerFloating">📢</div>
+    <div id="teksMengambang">Ayo di pilih!!</div>
+  </div>
+
+
+  <!-- Kontainer Daftar Produk -->
+  <div id="kontainerProduk">
+    <div id="gerinda" class="kategori active"><ol></ol></div>
+    <div id="dinamo" class="kategori"><ol></ol></div>
+    <div id="alat" class="kategori"><ol></ol></div>
+    <div id="lain" class="kategori"><ol></ol></div>
+  </div>
+  
+
+  
+<footer>
+  <p>📦 Kumpulan Produk Pilihan — Difilter berdasarkan pengalaman 🔧</p>
+  
+  <p>✅ Link aman, langsung menuju & checkout di TikTok Shop tanpa muter-muter 🛒</p>
+  <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
+  <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
+</footer>
+
+<script src="index.js"></script>
+
+<audio id="klikAudio" src="sounds/klik.wav" preload="auto"></audio>
+
+<audio id="promoAudio" src="sounds/adamJualan.mp3" preload="auto"></audio>
+
+
+
+</body>
+</html>
