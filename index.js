@@ -5,9 +5,11 @@ if (!userId) {
   localStorage.setItem('userId', userId);
 }
 
-// Catat kunjungan awal
-fetch(`https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}`)
-  .catch(console.error);
+// Pastikan userId sudah tersedia sebelum log kunjungan
+setTimeout(() => {
+  kirimLog('Z'); // Z = kode khusus untuk kunjungan awal
+}, 300);
+
 
 // Mapping kategori ke huruf
 const kategoriKode = {
@@ -59,16 +61,34 @@ fetch('data.json')
           kirimLog(kode, i + 1);
         });
 
-        // Gambar array aman
-        const gambarList = Array.isArray(produk.gambar) && produk.gambar.length > 0
-          ? produk.gambar
-          : ['gbS.png'];
+        
+        // Tentukan gambar berdasarkan array atau otomatis dari folder
+let gambarList = [];
+
+if (Array.isArray(produk.gambar) && produk.gambar.length > 0) {
+  gambarList = produk.gambar.map(nama => `images/${kategori}/${nama}`);
+} else {
+  const nomor = i + 1;
+  const namaGambar = `${kategori}${nomor}.png`;
+  gambarList = [`images/${kategori}/${namaGambar}`];
+}
 
         const img = document.createElement('img');
-        img.className = 'thumb-produk';
-        img.src = gambarList[0];
-        img.alt = produk.judul;
-        img.addEventListener('click', () => bukaPopup(gambarList));
+img.className = 'thumb-produk';
+img.src = gambarList[0];
+img.alt = produk.judul;
+
+// Tangani error gambar gagal dimuat
+img.onerror = () => {
+  img.onerror = null;
+  img.src = 'gbS.png';
+  gambarList = ['gbS.png'];
+};
+
+img.addEventListener('click', () => bukaPopup(gambarList));
+
+
+        
 
         wrapper.appendChild(link);
         wrapper.appendChild(img);
@@ -80,7 +100,7 @@ fetch('data.json')
 
 // Fungsi log klik ke Google Sheet
 function kirimLog(kodeKategori, nomor = null) {
-  const url = `https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec?id=${userId}&cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
+  const url = `https://script.google.com/macros/s/AKfycbyr2e58IffNgMv1KtMlbg3mMqKL7d7dhved7pWSZg7m-e0Wx1f2B0Ymx-SBbZGnW2c1/exec?id=${userId}&cat=${kodeKategori}${nomor ? `&item=${nomor}` : ''}`;
   fetch(url).catch(console.error);
 }
 
@@ -107,8 +127,8 @@ function putarPromo() {
   }
 }
 
-// Kunjungan
-fetch('https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECkG0SxCfL9PX6DAWNBN-QdyPY1vSHD_bJhTD/exec')
+// Ambil jumlah pengunjung saja (tanpa mencatat kunjungan baru)
+fetch('https://script.google.com/macros/s/AKfycbyr2e58IffNgMv1KtMlbg3mMqKL7d7dhved7pWSZg7m-e0Wx1f2B0Ymx-SBbZGnW2c1/exec?stat=1')
   .then(res => res.json())
   .then(data => {
     document.getElementById('pageviews').textContent = data.jumlah?.toLocaleString('id-ID') || 'Tercatat!';
@@ -118,6 +138,7 @@ fetch('https://script.google.com/macros/s/AKfycby4Hr3YlYJC_AKI1NmoD3W94svCORIECk
   });
 
 // === Popup Gambar ===
+// === Popup Gambar ===
 const popup = document.createElement('div');
 popup.id = 'popupGambar';
 popup.innerHTML = `
@@ -125,7 +146,7 @@ popup.innerHTML = `
     <span id="prevGambar">←</span>
     <span id="nextGambar">→</span>
   </div>
-  <span class="tutup-popup" onclick="tutupPopup()">×</span>
+  <button class="tutup-popup" onclick="tutupPopup()">← Kembali</button>
   <img id="gambarPopup" src="" alt="Gambar Produk">
 `;
 document.body.appendChild(popup);
@@ -138,6 +159,11 @@ function bukaPopup(gambarList) {
   indeksGambar = 0;
   tampilkanGambar();
   popup.style.display = 'flex';
+  
+  // Tambahkan logika klik luar gambar
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) tutupPopup();
+  });
 }
 
 function tampilkanGambar() {
