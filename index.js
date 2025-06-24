@@ -298,6 +298,8 @@ document.getElementById('popupBack').onclick = () => {
   document.getElementById('popupGambar').style.display = 'none';
 };
 
+
+
 window.addEventListener('load', () => {
   const hash = location.hash.slice(1); // hapus tanda #
   if (!hash.includes('-')) return;
@@ -320,6 +322,20 @@ document.getElementById('popupBuy').onclick = () => {
 };
 
 
+
+
+document.getElementById('popupShare').onclick = () => {
+  const url = `${location.origin}/#${kategoriAktif}-${currentNomor}`;
+  const pesan = `📦 Produk Terbaru dari Rekomendasi Wongzhe123!
+
+🛍️ ${currentJudul}
+🔗 ${url}
+
+✅ Bisa langsung checkout via TikTok Shop!`;
+  
+  const waLink = `https://wa.me/?text=${encodeURIComponent(pesan)}`;
+  window.open(waLink, '_blank');
+};
 
 // Tambahkan baris ini di paling akhir index.js
 tampilKategori('gerinda');
