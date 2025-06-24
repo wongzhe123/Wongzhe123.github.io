@@ -298,14 +298,21 @@ document.getElementById('popupBack').onclick = () => {
   document.getElementById('popupGambar').style.display = 'none';
 };
 
-document.getElementById('popupShare').onclick = () => {
-  const pesan = `📦 *Produk Terbaru dari Rekomendasi Wongzhe123!*\n\n🛍️ *${currentJudul}*\n🔗 ${currentUrl}\n\n✅ Bisa langsung checkout via TikTok Shop!`;
+window.addEventListener('load', () => {
+  const hash = location.hash.slice(1); // hapus tanda #
+  if (!hash.includes('-')) return;
   
-  const encodedPesan = encodeURIComponent(pesan);
-  const waLink = `https://wa.me/?text=${encodedPesan}`;
+  const [kategori, nomorStr] = hash.split('-');
+  const nomor = parseInt(nomorStr);
   
-  window.open(waLink, '_blank');
-};
+  if (kategori in semuaProdukSemuaKategori && nomor > 0) {
+    tampilKategori(kategori); // pastikan kategori aktif dulu
+    
+    setTimeout(() => {
+      bukaPopup(nomor - 1); // tampilkan popup berdasarkan nomor
+    }, 300); // beri jeda supaya kategori tampil dulu
+  }
+});
 
 
 document.getElementById('popupBuy').onclick = () => {
@@ -316,6 +323,22 @@ document.getElementById('popupBuy').onclick = () => {
 
 // Tambahkan baris ini di paling akhir index.js
 tampilKategori('gerinda');
+
+window.addEventListener('load', () => {
+  const hash = location.hash.slice(1); // hapus tanda #
+  if (!hash.includes('-')) return;
+  
+  const [kategori, nomorStr] = hash.split('-');
+  const nomor = parseInt(nomorStr);
+  
+  if (kategori in semuaProdukSemuaKategori && nomor > 0) {
+    tampilKategori(kategori); // pastikan kategori aktif dulu
+    
+    setTimeout(() => {
+      bukaPopup(nomor - 1); // tampilkan popup berdasarkan nomor
+    }, 300); // beri jeda supaya kategori tampil dulu
+  }
+});
 
 // Tutup popup saat klik di luar konten
 popup.addEventListener('click', (e) => {
