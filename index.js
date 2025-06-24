@@ -1,3 +1,6 @@
+let semuaProdukSemuaKategori = {}; // ⬅️ simpan semua data di sini
+let kategoriAktif = '';
+
 // Buat ID unik
 let userId = localStorage.getItem('userId');
 if (!userId) {
@@ -9,7 +12,6 @@ if (!userId) {
 setTimeout(() => {
   kirimLog('Z'); // Z = kode khusus untuk kunjungan awal
 }, 300);
-
 
 // Mapping kategori ke huruf
 const kategoriKode = {
@@ -23,16 +25,20 @@ const kategoriKode = {
 function tampilKategori(id) {
   document.querySelectorAll('.kategori').forEach(k => k.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-
+  
+  kategoriAktif = id; // ✅ Tambahkan baris ini
+  
   const klikSound = document.getElementById('klikAudio');
   if (klikSound) {
     klikSound.currentTime = 0;
     klikSound.play();
   }
-
+  
   const kode = kategoriKode[id];
   if (kode) kirimLog(kode);
 }
+
+
 
 // Ambil data dan tampilkan produk
 fetch('data.json')
@@ -41,6 +47,8 @@ fetch('data.json')
     Object.keys(data).forEach(kategori => {
       const target = document.querySelector(`#${kategori} ol`);
       if (!target) return;
+
+      semuaProdukSemuaKategori[kategori] = data[kategori]; // ✅ benar
 
       // Reset nomor lokal per kategori
       data[kategori].forEach((produk, i) => {
@@ -61,34 +69,35 @@ fetch('data.json')
           kirimLog(kode, i + 1);
         });
 
-        
         // Tentukan gambar berdasarkan array atau otomatis dari folder
-let gambarList = [];
+        let gambarList = [];
 
-if (Array.isArray(produk.gambar) && produk.gambar.length > 0) {
-  gambarList = produk.gambar.map(nama => `images/${kategori}/${nama}`);
-} else {
-  const nomor = i + 1;
-  const namaGambar = `${kategori}${nomor}.png`;
-  gambarList = [`images/${kategori}/${namaGambar}`];
+        if (Array.isArray(produk.gambar) && produk.gambar.length > 0) {
+          gambarList = produk.gambar.map(nama => `images/${kategori}/${nama}`);
+        } else {
+  gambarList = [`images/${kategori}/${kategori}${i + 1}.png`];
 }
 
-        const img = document.createElement('img');
+const img = document.createElement('img');
 img.className = 'thumb-produk';
 img.src = gambarList[0];
 img.alt = produk.judul;
 
-// Tangani error gambar gagal dimuat
+// ✅ Tangani error: jika gambar gagal dimuat, tampilkan gbS.png
 img.onerror = () => {
-  img.onerror = null;
   img.src = 'gbS.png';
-  gambarList = ['gbS.png'];
 };
 
-img.addEventListener('click', () => bukaPopup(gambarList));
+        // Tangani error gambar gagal dimuat
+        img.onerror = () => {
+          img.onerror = null;
+          img.src = 'gbS.png';
+          gambarList = ['gbS.png'];
+        };
 
-
+        img.addEventListener('click', () => 
         
+        bukaPopup(i));
 
         wrapper.appendChild(link);
         wrapper.appendChild(img);
@@ -137,52 +146,180 @@ fetch('https://script.google.com/macros/s/AKfycbyr2e58IffNgMv1KtMlbg3mMqKL7d7dhv
     document.getElementById('pageviews').textContent = 'Gagal memuat';
   });
 
+
 // === Popup Gambar ===
-// === Popup Gambar ===
+// Buat elemen popup
 const popup = document.createElement('div');
 popup.id = 'popupGambar';
 popup.innerHTML = `
-  <div class="navigasi-gambar">
-    <span id="prevGambar">←</span>
-    <span id="nextGambar">→</span>
+  <div class="popup-toolbar">
+    <button id="popupBack">← Kembali</button>
+    <button id="popupShare">📤 Bagikan</button>
   </div>
-  <button class="tutup-popup" onclick="tutupPopup()">← Kembali</button>
-  <img id="gambarPopup" src="" alt="Gambar Produk">
+
+  <div class="popup-content">
+    <img id="gambarPopup" src="" alt="Gambar Produk">
+    
+    <div class="popup-arrows-horizontal">
+  <button class="arrow-horiz arrow-left">❮</button>
+  <button class="arrow-horiz arrow-right">❯</button>
+</div>
+    
+    <div id="popupInfo"></div>
+    <div class="popup-footer">
+      <button id="popupBuy">🛒 Beli Sekarang</button>
+    </div>
+  </div>
+
+  <!-- Panah scroll vertikal di area hitam luar -->
+  <button class="arrow-vert arrow-up">▲</button>
+  <button class="arrow-vert arrow-down">▼</button>
 `;
 document.body.appendChild(popup);
 
-let semuaGambar = [];
-let indeksGambar = 0;
 
-function bukaPopup(gambarList) {
-  semuaGambar = gambarList;
-  indeksGambar = 0;
-  tampilkanGambar();
-  popup.style.display = 'flex';
-  
-  // Tambahkan logika klik luar gambar
-  popup.addEventListener('click', function(e) {
-    if (e.target === popup) tutupPopup();
-  });
-}
+// Event listener tombol panah atas
+popup.querySelector('.arrow-up').addEventListener('click', (e) => {
+  e.stopPropagation(); // mencegah menutup popup saat tombol diklik
+  if (indeksProduk > 0) {
+    bukaPopup(indeksProduk - 1);
+  }
+});
 
-function tampilkanGambar() {
-  const gambarEl = document.getElementById('gambarPopup');
-  if (gambarEl && semuaGambar.length > 0) {
-    gambarEl.src = semuaGambar[indeksGambar];
+// Event listener tombol panah bawah
+popup.querySelector('.arrow-down').addEventListener('click', (e) => {
+  e.stopPropagation(); // mencegah menutup popup saat tombol diklik
+  if (indeksProduk < semuaProduk.length - 1) {
+    bukaPopup(indeksProduk + 1);
+  }
+});
+
+
+// Tombol gambar sebelumnya
+popup.querySelector('.arrow-left').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (semuaGambar.length > 1 && indeksGambar > 0) {
+    indeksGambar--;
+    document.getElementById('gambarPopup').src = semuaGambar[indeksGambar];
+  }
+});
+
+// Tombol gambar selanjutnya
+popup.querySelector('.arrow-right').addEventListener('click', (e) => {
+  e.stopPropagation();
+  if (semuaGambar.length > 1 && indeksGambar < semuaGambar.length - 1) {
+    indeksGambar++;
+    document.getElementById('gambarPopup').src = semuaGambar[indeksGambar];
+  }
+});
+// Setelah popup ditambahkan ke DOM, pasang event listener
+function navigasiProdukDenganScroll(e) {
+  e.preventDefault();
+  if (e.deltaY > 0) {
+    if (indeksProduk < semuaProduk.length - 1) bukaPopup(indeksProduk + 1);
+  } else {
+    if (indeksProduk > 0) bukaPopup(indeksProduk - 1);
   }
 }
 
-function tutupPopup() {
-  popup.style.display = 'none';
+// Pasang setelah elemen pasti ada
+popup.addEventListener('wheel', navigasiProdukDenganScroll);
+popup.querySelector('.popup-content').addEventListener('wheel', navigasiProdukDenganScroll);
+popup.querySelector('#gambarPopup').addEventListener('wheel', navigasiProdukDenganScroll);
+
+
+
+let touchStartY = 0;
+
+popup.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+});
+
+popup.addEventListener('touchend', (e) => {
+  const deltaY = e.changedTouches[0].clientY - touchStartY;
+  if (deltaY < -30) {
+    if (indeksProduk < semuaProduk.length - 1) bukaPopup(indeksProduk + 1);
+  } else if (deltaY > 30) {
+    if (indeksProduk > 0) bukaPopup(indeksProduk - 1);
+  }
+});
+
+let semuaGambar = [];
+let semuaProduk = [];
+let indeksGambar = 0;
+let indeksProduk = 0;
+let currentJudul = '';
+let currentUrl = '';
+let currentNomor = '';
+
+function bukaPopup(i) {
+  semuaProduk = semuaProdukSemuaKategori[kategoriAktif];
+  if (!semuaProduk || !semuaProduk[i]) {
+    console.warn('Produk tidak ditemukan di kategori:', kategoriAktif);
+    return;
+  }
+  
+  indeksProduk = i;
+  const produk = semuaProduk[indeksProduk];
+  
+  semuaGambar = Array.isArray(produk.gambar) && produk.gambar.length > 0 ?
+    produk.gambar.map(nama => `images/${kategoriAktif}/${nama}`) :
+    [`images/${kategoriAktif}/${kategoriAktif}${indeksProduk + 1}.png`];
+  
+  indeksGambar = 0;
+  currentJudul = produk.judul;
+  currentUrl = produk.url;
+  currentNomor = indeksProduk + 1;
+  
+  const gambarPopup = document.getElementById('gambarPopup');
+gambarPopup.onerror = () => {
+  gambarPopup.src = 'gbS.png';
+};
+gambarPopup.src = semuaGambar[0];
+
+// Sembunyikan tombol panah jika hanya satu gambar
+const arrowLeft = document.querySelector('.arrow-left');
+const arrowRight = document.querySelector('.arrow-right');
+
+if (semuaGambar.length > 1) {
+  arrowLeft.style.display = 'block';
+  arrowRight.style.display = 'block';
+} else {
+  arrowLeft.style.display = 'none';
+  arrowRight.style.display = 'none';
+}  
+  
+  document.getElementById('popupInfo').textContent = `${currentNomor}. ${currentJudul}`;
+  document.getElementById('popupGambar').style.display = 'flex';
 }
 
-document.getElementById('prevGambar').onclick = () => {
-  indeksGambar = (indeksGambar - 1 + semuaGambar.length) % semuaGambar.length;
-  tampilkanGambar();
+// Tombol popup
+document.getElementById('popupBack').onclick = () => {
+  document.getElementById('popupGambar').style.display = 'none';
 };
 
-document.getElementById('nextGambar').onclick = () => {
-  indeksGambar = (indeksGambar + 1) % semuaGambar.length;
-  tampilkanGambar();
+document.getElementById('popupShare').onclick = () => {
+  const pesan = `📦 *Produk Terbaru dari Rekomendasi Wongzhe123!*\n\n🛍️ *${currentJudul}*\n🔗 ${currentUrl}\n\n✅ Bisa langsung checkout via TikTok Shop!`;
+  
+  const encodedPesan = encodeURIComponent(pesan);
+  const waLink = `https://wa.me/?text=${encodedPesan}`;
+  
+  window.open(waLink, '_blank');
 };
+
+
+document.getElementById('popupBuy').onclick = () => {
+  window.open(currentUrl, '_blank');
+};
+
+
+
+// Tambahkan baris ini di paling akhir index.js
+tampilKategori('gerinda');
+
+// Tutup popup saat klik di luar konten
+popup.addEventListener('click', (e) => {
+  if (e.target === popup) {
+    popup.style.display = 'none';
+  }
+});

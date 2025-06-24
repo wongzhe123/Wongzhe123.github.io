@@ -1,68 +1,69 @@
+/* Umum */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    line-height: 1.6;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  line-height: 1.6;
 }
 
 h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 nav {
-    text-align: center;
-    margin-bottom: 5px;
-    position: relative;
+  text-align: center;
+  margin-bottom: 5px;
+  position: relative;
 }
 
 nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
+  margin: 0 10px;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
 }
 
 nav a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .kategori {
-    display: none;
+  display: none;
 }
 
 .kategori.active {
-    display: block;
+  display: block;
 }
 
 ol {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 
 li {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 li a {
-    color: #0645AD;
-    text-decoration: none;
+  color: #0645AD;
+  text-decoration: none;
 }
 
 li a:visited {
-    color: #551A8B;
+  color: #551A8B;
 }
 
 li a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 14px;
-    color: #888;
-    border-top: 1px solid #ddd;
-    margin-top: 40px;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #888;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
 }
 
 /* Telunjuk animasi */
@@ -81,12 +82,12 @@ footer {
 
 /* Speaker animasi */
 #speakerWrapper {
-    display: inline-block;
-    margin-top: 0;
-    margin-bottom: 10px;
-    text-align: center;
-    cursor: pointer;
-    width: 30%;
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+  width: 30%;
 }
 
 #speakerFloating {
@@ -142,90 +143,186 @@ li img.thumb-produk {
   cursor: pointer;
 }
 
-/* Modal tampilan gambar besar */
+/* === Popup Gambar === */
 #popupGambar {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
   flex-direction: column;
+  z-index: 9999;
+  overflow: hidden;
+  touch-action: none;
 }
 
-#popupGambar img {
-  max-width: 90%;
-  max-height: 80vh;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-#popupGambar .navigasi-gambar {
+.popup-toolbar {
   position: absolute;
-  top: 50%;
+  top: 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: white;
-  font-size: 36px;
-  user-select: none;
-  cursor: pointer;
   padding: 0 20px;
+  z-index: 1;
 }
 
-#popupGambar .tutup-popup {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  color: white;
-  font-size: 28px;
+#popupBack, #popupShare {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
   cursor: pointer;
+  backdrop-filter: blur(4px);
 }
 
-
-#popupGambar {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 9999;
+.popup-content {
+  background: white;
+  padding: 1em;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
-#popupGambar img {
-    max-width: 90%;
-    max-height: 80vh;
-    border-radius: 8px;
-    box-shadow: 0 0 12px #000;
+.popup-content img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-bottom: 1em;
 }
 
-.tutup-popup {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
+#popupBuy {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+margin-bottom: 10px;
+
+
+#popupInfo {
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+  text-align: center;
+  padding: 6px 12px;
+  margin-top: 0.5em;
 }
 
-.navigasi-gambar {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    font-size: 32px;
-    color: white;
-    user-select: none;
+.popup-footer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#popupBuy {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.scroll-arrows {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+.arrow-up, .arrow-down {
+  font-size: 2rem;
+  opacity: 0.7;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  color: white;
+  text-shadow: 0 0 5px black;
+}
+
+/* Posisi tombol panah atas dan bawah di luar gambar */
+.arrow-vert {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 2rem;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  z-index: 1001;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.arrow-up {
+  top: 60px;
+}
+
+.arrow-down {
+  bottom: 60px;
+}
+
+.arrow-vert:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.arrow-horiz {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+  z-index: 1001;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.arrow-left {
+  left: 10px;
+}
+
+.arrow-right {
+  right: 10px;
+}
+
+.arrow-horiz:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: black;
 }
