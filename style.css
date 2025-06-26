@@ -12,7 +12,7 @@ h1 {
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
-  background-color: #007aff; /* biru Tokopedia */
+  background-color: #03ac0e; /* biru Tokopedia */
   border-radius: 0;
   text-align: center;
   text-shadow: none;
@@ -21,36 +21,45 @@ h1 {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-  box-shadow: none; /* hilangkan timbul */
+  text-shadow: 1px 1px 0 #016d08, 2px 2px 0 #014c06, 3px 3px 3px rgba(0,0,0,0.2);
+  
 }
 
 nav {
-  margin: 0;
-  padding: 8px 0;
-  background-color: #007aff;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background-color: #03ac0e; /* Hijau Tokopedia */
   position: sticky;
   top: 0;
   z-index: 999;
-  border-bottom: none;
-  box-shadow: none; /* hilangkan timbul */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #01870b;
 }
 
 nav a {
-  margin: 0 10px;
-  color: #fff;
+  padding: 4px 10px;
+  background-color: #ffffff;
+  color: #03ac0e;
+  border-radius: 18px;
   font-weight: bold;
+  font-size: 13px;
   text-decoration: none;
-  font-size: 15px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 nav a:hover {
-  color: #fffdc7;
-  text-decoration: underline;
-}
-.kategori.active {
-  display: block;
+  background-color: #fffdc7;
+  color: #01870b;
 }
 
+nav a:active {
+  background-color: #03ac0e;
+  color: white;
+}
 /* === List Produk === */
 ol { padding-left: 20px; }
 
@@ -308,8 +317,8 @@ footer a:hover {
 
 #speakerWrapper {
   position: fixed;
-  top: 8px;
-  right: 8px;
+  top: 22px;
+  left: 8px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -367,4 +376,7 @@ footer a:hover {
 /* Tambahan agar kategori nonaktif disembunyikan */
 .kategori {
   display: none;
+}
+.kategori.active {
+  display: block !important;
 }
