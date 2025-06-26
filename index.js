@@ -79,14 +79,12 @@ fetch('data.json')
 }
 
 const img = document.createElement('img');
+img.loading = 'lazy' //gmbr di muat saat mendekati layar
 img.className = 'thumb-produk';
 img.src = gambarList[0];
 img.alt = produk.judul;
 
-// ✅ Tangani error: jika gambar gagal dimuat, tampilkan gbS.png
-img.onerror = () => {
-  img.src = 'gbS.png';
-};
+
 
         // Tangani error gambar gagal dimuat
         img.onerror = () => {
@@ -167,7 +165,7 @@ popup.innerHTML = `
     
     <div id="popupInfo"></div>
     <div class="popup-footer">
-      <button id="popupBuy">🛒 Beli Sekarang</button>
+      <button id="popupBuy">🛒 Harga Spesial</button>
     </div>
   </div>
 
@@ -223,7 +221,7 @@ function navigasiProdukDenganScroll(e) {
 }
 
 // Pasang setelah elemen pasti ada
-popup.addEventListener('wheel', navigasiProdukDenganScroll);
+popup.addEventListener('wheel', navigasiProdukDenganScroll, { passive: false });
 popup.querySelector('.popup-content').addEventListener('wheel', navigasiProdukDenganScroll);
 popup.querySelector('#gambarPopup').addEventListener('wheel', navigasiProdukDenganScroll);
 
@@ -326,7 +324,7 @@ document.getElementById('popupBuy').onclick = () => {
 
 document.getElementById('popupShare').onclick = () => {
   const url = `${location.origin}/#${kategoriAktif}-${currentNomor}`;
-  const pesan = `📦 Produk Terbaru dari Rekomendasi Wongzhe123!
+  const pesan = `📦 Produk Terbaru Rekomendasi Wongzhe123!
 
 🛍️ ${currentJudul}
 🔗 ${url}
@@ -340,21 +338,6 @@ document.getElementById('popupShare').onclick = () => {
 // Tambahkan baris ini di paling akhir index.js
 tampilKategori('gerinda');
 
-window.addEventListener('load', () => {
-  const hash = location.hash.slice(1); // hapus tanda #
-  if (!hash.includes('-')) return;
-  
-  const [kategori, nomorStr] = hash.split('-');
-  const nomor = parseInt(nomorStr);
-  
-  if (kategori in semuaProdukSemuaKategori && nomor > 0) {
-    tampilKategori(kategori); // pastikan kategori aktif dulu
-    
-    setTimeout(() => {
-      bukaPopup(nomor - 1); // tampilkan popup berdasarkan nomor
-    }, 300); // beri jeda supaya kategori tampil dulu
-  }
-});
 
 // Tutup popup saat klik di luar konten
 popup.addEventListener('click', (e) => {

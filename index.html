@@ -3,14 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#007aff">
   <title>Kumpulan Rekomendasi Produk</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="prefetch" href="gbS.png" as="image">
 </head>
 <body>
    
-  <h1>Kumpulan Rekomendasi Produk</h1>
-  <br><br>
-
+  <h1>
+  <span class="daun-glow">🌿</span>
+  Kumpulan
+  <span class="daun-glow">🌿</span>
+  Rekomendasi Produk
+</h1>
+  
   <!-- Emoji telunjuk -->
   <div id="pointer" class="pointer-anim">👇</div>
 
@@ -22,11 +28,12 @@
     <a href="#" onclick="tampilKategori('lain')">Lain-lain</a>
   </nav>
 
-  <!-- Tombol Speaker Melayang -->
-  <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
-    <div id="speakerFloating">📢</div>
-    <div id="teksMengambang">Ayo di pilih!!</div>
-  </div>
+ <!-- Tombol Speaker Melayang -->
+<div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
+  <div id="speakerFloating">📢</div>
+  <div id="teksMengambang">Ayo di pilih!!</div>
+</div> <!-- ← Tambahkan ini -->
+  
 
   <!-- Kontainer Daftar Produk -->
   <div id="kontainerProduk">

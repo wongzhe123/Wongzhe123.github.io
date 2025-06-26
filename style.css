@@ -1,125 +1,63 @@
-/* Umum */
+/* === Umum === */
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0px;
+  padding: 0 5px;
   line-height: 1.6;
 }
 
 h1 {
+  margin: 0;
+  padding: 10px 16px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  background-color: #007aff; /* biru Tokopedia */
+  border-radius: 0;
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 10px;
+  text-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  box-shadow: none; /* hilangkan timbul */
 }
 
 nav {
-  text-align: center;
-  margin-bottom: 5px;
-  position: relative;
+  margin: 0;
+  padding: 8px 0;
+  background-color: #007aff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: none;
+  box-shadow: none; /* hilangkan timbul */
 }
 
 nav a {
   margin: 0 10px;
-  text-decoration: none;
-  color: #333;
+  color: #fff;
   font-weight: bold;
+  text-decoration: none;
+  font-size: 15px;
 }
 
 nav a:hover {
+  color: #fffdc7;
   text-decoration: underline;
 }
-
-.kategori {
-  display: none;
-}
-
 .kategori.active {
   display: block;
 }
 
-ol {
-  padding-left: 20px;
-}
+/* === List Produk === */
+ol { padding-left: 20px; }
 
 li {
   margin-bottom: 10px;
 }
 
-li a {
-  color: #0645AD;
-  text-decoration: none;
-}
-
-li a:visited {
-  color: #551A8B;
-}
-
-li a:hover {
-  text-decoration: underline;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #888;
-  border-top: 1px solid #ddd;
-  margin-top: 40px;
-}
-
-/* Telunjuk animasi */
-.pointer-anim {
-  position: absolute;
-  font-size: 24px;
-  animation: loncat 0.3s ease infinite alternate;
-  transition: top 0.3s, left 0.3s;
-  z-index: 1000;
-}
-
-@keyframes loncat {
-  from { transform: translateY(0); }
-  to { transform: translateY(-10px); }
-}
-
-/* Speaker animasi */
-#speakerWrapper {
-  display: inline-block;
-  margin-top: 0;
-  margin-bottom: 10px;
-  text-align: center;
-  cursor: pointer;
-  width: 30%;
-}
-
-#speakerFloating {
-  font-size: 36px;
-  animation: goyang 1s infinite;
-}
-
-#teksMengambang {
-  font-size: 14px;
-  color: #333;
-  background: rgba(255,255,255,0.8);
-  padding: 2px 6px;
-  border-radius: 8px;
-  margin-top: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  animation: teksNaikTurun 2s infinite;
-}
-
-@keyframes goyang {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(-10deg); }
-  50% { transform: rotate(10deg); }
-  75% { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes teksNaikTurun {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-/* Struktur gambar kecil di kanan */
 li div.produk-wrapper {
   display: flex;
   justify-content: space-between;
@@ -143,18 +81,22 @@ li img.thumb-produk {
   cursor: pointer;
 }
 
+
+ol li::marker {
+  color: #02780a; /* hijau Tokopedia lebih gelap */
+  font-weight: bold;
+  font-size: 1.1em;
+}
 /* === Popup Gambar === */
 #popupGambar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background: rgba(0, 0, 0, 0.8);
   display: none;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   z-index: 9999;
   overflow: hidden;
   touch-action: none;
@@ -162,23 +104,42 @@ li img.thumb-produk {
 
 .popup-toolbar {
   position: absolute;
-  top: 10px;
-  width: 100%;
+  top: 12px;
+  left: 12px;
+  right: 12px;
   display: flex;
   justify-content: space-between;
-  padding: 0 20px;
-  z-index: 1;
+  gap: 12px;
+  z-index: 1002;
 }
 
-#popupBack, #popupShare {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+#popupBack,
+#popupShare {
+  flex: 1;
+  max-width: 160px;
+  background: rgba(3, 172, 14, 0.7);
+  color: white;
   border: none;
   padding: 8px 12px;
   font-size: 14px;
-  border-radius: 6px;
+  font-weight: bold;
+  border-radius: 8px;
   cursor: pointer;
   backdrop-filter: blur(4px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+#popupBack:hover,
+#popupShare:hover {
+  background: rgba(2, 140, 10, 0.9);
+  transform: scale(1.05);
+}
+#popupBack:active,
+#popupShare:active {
+  background: rgba(1, 120, 8, 1);
+  transform: scale(0.95);
 }
 
 .popup-content {
@@ -186,38 +147,48 @@ li img.thumb-produk {
   padding: 1em;
   max-width: 90%;
   max-height: 90%;
-  overflow: hidden;
   text-align: center;
   border-radius: 8px;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  overflow-y: auto;
 }
 
 .popup-content img {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 50vh;
   object-fit: contain;
   margin-bottom: 1em;
 }
 
+/* Tombol beli */
 #popupBuy {
-  background: #28a745;
+  background: #03ac0e;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 16px;
+  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
-  
-  margin-top: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
-margin-bottom: 10px;
+#popupBuy:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+#popupBuy:active {
+  transform: scale(0.95);
+}
 
-
+/* Info di bawah gambar */
 #popupInfo {
   font-weight: bold;
   color: #333;
@@ -227,49 +198,7 @@ margin-bottom: 10px;
   margin-top: 0.5em;
 }
 
-.popup-footer {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 10px;
-}
-
-#popupBuy {
-  background: #28a745;
-  color: #fff;
-  border: none;
-  padding: 10px 16px;
-  font-size: 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.scroll-arrows {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  width: 100%;
-}
-
-.arrow-up, .arrow-down {
-  font-size: 2rem;
-  opacity: 0.7;
-  text-align: center;
-  pointer-events: none;
-  user-select: none;
-  color: white;
-  text-shadow: 0 0 5px black;
-}
-
-/* Posisi tombol panah atas dan bawah di luar gambar */
+/* Panah Navigasi */
 .arrow-vert {
   position: absolute;
   left: 50%;
@@ -283,21 +212,14 @@ margin-bottom: 10px;
   height: 44px;
   z-index: 1001;
   cursor: pointer;
-  pointer-events: auto;
 }
-
-.arrow-up {
-  top: 60px;
-}
-
-.arrow-down {
-  bottom: 60px;
-}
-
+.arrow-up { top: 60px; }
+.arrow-down { bottom: 60px; }
 .arrow-vert:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* Panah kiri-kanan gambar */
 .arrow-horiz {
   position: absolute;
   top: 50%;
@@ -311,18 +233,138 @@ margin-bottom: 10px;
   font-size: 1.5rem;
   z-index: 1001;
   cursor: pointer;
-  pointer-events: auto;
 }
-
-.arrow-left {
-  left: 10px;
-}
-
-.arrow-right {
-  right: 10px;
-}
-
+.arrow-left { left: 10px; }
+.arrow-right { right: 10px; }
 .arrow-horiz:hover {
   background: rgba(255, 255, 255, 0.3);
   color: black;
+}
+
+/* === Efek Halus === */
+.pointer-anim {
+  position: absolute;
+  font-size: 24px;
+  animation: loncat 0.3s ease infinite alternate;
+  transition: top 0.3s, left 0.3s;
+  z-index: 1000;
+}
+@keyframes loncat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+#pageviews {
+  display: inline-block;
+  animation: goyangSebentar 1s ease-in-out;
+  animation-iteration-count: 10;
+}
+@keyframes goyangSebentar {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+  75% { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+/* === Media Query (untuk HP kecil) === */
+@media (max-width: 360px) {
+  .popup-toolbar {
+    flex-direction: column;
+    gap: 6px;
+    align-items: stretch;
+  }
+}
+
+
+.popup-footer {
+  display: flex;
+  justify-content: flex-end; /* Ini yang memastikan tombol di kanan */
+  width: 100%;
+  margin-top: 10px;
+  padding-right: 12px; /* Tambahan opsional biar nggak nempel ke pinggir */
+}
+
+footer {
+  margin-top: 60px;
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.03);
+}
+
+footer a {
+  color: #03ac0e;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+#speakerWrapper {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 6px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  max-width: 80px;
+}
+
+#speakerFloating {
+  font-size: 18px; /* lebih kecil */
+  animation: goyang 1.2s ease-in-out infinite;
+}
+
+#teksMengambang {
+  font-size: 10px; /* lebih kecil lagi */
+  font-weight: bold;
+  color: red;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@keyframes goyang {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes teksNaikTurun {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Tambahan agar daun melambai */
+.daun-glow {
+  display: inline-block;
+  animation: daunLambai 1.8s ease-in-out infinite;
+  transform-origin: center bottom;
+  font-size: 1em;
+}
+@keyframes daunLambai {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(12deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Tambahan agar kategori nonaktif disembunyikan */
+.kategori {
+  display: none;
 }
