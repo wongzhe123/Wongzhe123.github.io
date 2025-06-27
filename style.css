@@ -315,11 +315,23 @@ footer a:hover {
   text-decoration: underline;
 }
 
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-row p {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  font-size: 14px;
+}
 #speakerWrapper {
-  position: fixed;
-  top: 22px;
-  left: 8px;
-  z-index: 1000;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
