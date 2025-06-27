@@ -167,7 +167,7 @@ popup.innerHTML = `
     
     <div id="popupInfo"></div>
     <div class="popup-footer">
-      <button id="popupBuy">🛒 Harga Spesial</button>
+      <button id="popupBuy">🛒 Cek Harga</button>
     </div>
   </div>
 
@@ -326,7 +326,7 @@ document.getElementById('popupBuy').onclick = () => {
 
 document.getElementById('popupShare').onclick = () => {
   const url = `${location.origin}/#${kategoriAktif}-${currentNomor}`;
-  const pesan = `📦 Produk Terbaru Rekomendasi Wongzhe123!
+  const pesan = `🔍Cek Rekomendasi Alat Alat Wongzhe123!
 
 🛍️ ${currentJudul}
 🔗 ${url}
