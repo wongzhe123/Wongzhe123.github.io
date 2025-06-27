@@ -391,3 +391,23 @@ footer a:hover {
 .kategori.active {
   display: block !important;
 }
+
+
+
+#installContainer {
+  margin-top: 12px;
+  text-align: center;
+}
+
+#installBtn {
+  background: #03ac0e;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: goyangSebentar 1s ease-in-out;
+}
