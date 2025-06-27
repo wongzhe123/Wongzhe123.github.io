@@ -346,43 +346,22 @@ popup.addEventListener('click', (e) => {
   }
 });
 
-// aplikasi manifest
 
-  
-  
-  
-  if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-    .then(reg => console.log('Service Worker registered', reg))
-    .catch(err => console.error('Service Worker registration failed', err));
+// === SERVICE WORKER DAN INSTALL PWA ===
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 
-
-
-// ✅ Tangani tombol install dengan benar setelah semua elemen dimuat
-window.addEventListener('load', () => {
-  const installBtn = document.getElementById('installBtn');
-  
-  
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'inline-block';
-  });
-  
-  installBtn.addEventListener('click', () => {
-    alert("Instal aplikasi 'Rekomendasi Lite'?");
-    installBtn.style.display = 'none';
-    if (deferredPrompt) {
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const installLink = document.getElementById('installLink');
+  if (installLink) {
+    installLink.style.display = 'inline-block';
+    installLink.addEventListener('click', () => {
+      alert("Klik OK untuk install aplikasi super ringan.");
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted');
-        } else {
-          console.log('User dismissed');
-        }
-        deferredPrompt = null;
-      });
-    }
-  });
+    });
+  }
 });
