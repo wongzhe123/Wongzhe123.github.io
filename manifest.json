@@ -1,6 +1,6 @@
 {
-  "name": "Rekomendasi Produk Wongzhe",
-  "short_name": "ProdukWongzhe",
+  "name": "Cek Alat Lite",
+  "short_name": "CekAlatLite",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
