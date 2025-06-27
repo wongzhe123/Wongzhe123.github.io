@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#03ac0e">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#03ac0e">
+
   <meta name="color-scheme" content="light">
   <title>Kumpulan Rekomendasi Produk</title>
   <link rel="stylesheet" href="style.css" />
@@ -48,6 +50,9 @@
     <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
       <div id="speakerFloating">📢</div>
       <div id="teksMengambang">Ayo di pilih!!</div>
+      <p>
+  <button id="installBtn" style="display: none; background:#03ac0e; color:white; padding:6px 12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">📱 Install Aplikasi Lite</button>
+</p>
     </div>
     <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
   </div>

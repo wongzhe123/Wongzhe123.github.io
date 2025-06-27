@@ -345,3 +345,54 @@ popup.addEventListener('click', (e) => {
     popup.style.display = 'none';
   }
 });
+
+// aplikasi manifest
+
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = 'inline-block';
+  });
+  
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the A2HS prompt');
+        } else {
+          console.log('User dismissed the A2HS prompt');
+        }
+        deferredPrompt = null;
+      });
+    }
+  });
+  
+  
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => console.log('Service Worker registered', reg))
+    .catch(err => console.error('Service Worker registration failed', err));
+}
+
+
+
+installBtn.addEventListener('click', () => {
+  alert("Instal aplikasi 'Rekomendasi Lite'?");
+  installBtn.style.display = 'none';
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted');
+      } else {
+        console.log('User dismissed');
+      }
+      deferredPrompt = null;
+    });
+  }
+});

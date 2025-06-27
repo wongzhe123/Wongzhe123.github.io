@@ -334,9 +334,9 @@ footer a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   background: rgba(255, 255, 255, 0.85);
-  padding: 4px 6px;
+  padding: 2px 3px;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
