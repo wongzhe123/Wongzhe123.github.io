@@ -130,7 +130,9 @@ function putarPromo() {
   const audio = document.getElementById('promoAudio');
   if (audio) {
     audio.currentTime = 0;
-    audio.play();
+    audio.play().catch(err => {
+      console.warn('Gagal putar audio:', err.message);
+    });
   }
 }
 
