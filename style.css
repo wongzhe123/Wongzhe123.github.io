@@ -77,7 +77,6 @@ li div.produk-wrapper {
 li a.judul-produk {
   flex: 2;
   text-decoration: none;
-  color: #0645AD;
   font-weight: bold;
 }
 
@@ -92,7 +91,7 @@ li img.thumb-produk {
 
 
 ol li::marker {
-  color: #02780a; /* hijau Tokopedia lebih gelap */
+  color: #03ac0e; /* hijau Tokopedia lebih gelap */
   font-weight: bold;
   font-size: 1.1em;
 }
