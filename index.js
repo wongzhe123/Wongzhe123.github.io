@@ -312,6 +312,7 @@ window.addEventListener('load', () => {
     
     setTimeout(() => {
       bukaPopup(nomor - 1); // tampilkan popup berdasarkan nomor
+      kirimLog(kategoriKode[kategori], nomor);
     }, 300); // beri jeda supaya kategori tampil dulu
   }
 });
