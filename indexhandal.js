@@ -159,7 +159,9 @@ popup.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
 popup.addEventListener('touchend', e => {
   const deltaY = e.changedTouches[0].clientY - touchStartY;
   if (deltaY < -30 && indeksProduk < semuaProduk.length - 1) bukaPopup(indeksProduk + 1);
-  else if (deltaY > 30 && indeksProduk > 0) bukaPopup(indeksProduk - 1);
+  
+ else if (deltaY > 30 && indeksProduk > 0) bukaPopup(indeksProduk - 1);
+
 });
 
 function navigasiProdukDenganScroll(e) {
@@ -227,7 +229,6 @@ fetch('data.json')
 
     const kategoriSebelumnya = localStorage.getItem('kategoriAktif') || 'gerinda';
     tampilKategori(kategoriSebelumnya);
-    cekJumlahCacheGambar();
   });
 
 // === PWA INSTALL PROMPT ===
@@ -248,37 +249,3 @@ window.addEventListener('beforeinstallprompt', (e) => {
     };
   }
 });
-
-// === CEK DAN BERSIHKAN CACHE GAMBAR ===
-function cekJumlahCacheGambar() {
-  if (!('caches' in window)) return;
-  caches.open('produk-cache-v3').then(cache => {
-    cache.keys().then(keys => {
-      const jumlahGambar = keys.filter(req => req.url.includes('/images/')).length;
-      if (jumlahGambar > 20) {
-        const tombol = document.getElementById('btnClearCache');
-        if (tombol) tombol.style.display = 'inline-block';
-      }
-    });
-  });
-}
-
-function bersihkanGambarCache() {
-  if (!('caches' in window)) return alert('Browser tidak mendukung Cache API');
-  caches.open('produk-cache-v3').then(cache => {
-    cache.keys().then(keys => {
-      let jumlah = 0;
-      const hapusPromises = keys.map(req => {
-        if (req.url.includes('/images/')) {
-          jumlah++;
-          return cache.delete(req);
-        }
-      });
-      Promise.all(hapusPromises).then(() => {
-        alert(`✅ ${jumlah} gambar dihapus dari cache.`);
-        const tombol = document.getElementById('btnClearCache');
-        if (tombol) tombol.style.display = 'none';
-      });
-    });
-  });
-}

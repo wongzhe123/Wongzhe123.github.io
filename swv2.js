@@ -1,4 +1,4 @@
-const CACHE_NAME = 'produk-cache-v3';
+const CACHE_NAME = 'produk-cache-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -44,29 +44,26 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const req = event.request;
   
-  // Hanya tangani permintaan GET
+  // Hanya cache GET request
   if (req.method !== 'GET') return;
   
   event.respondWith(
     caches.match(req).then(cacheRes => {
+      // Jika ada di cache, gunakan
       if (cacheRes) return cacheRes;
       
+      // Jika tidak, fetch dari jaringan
       return fetch(req)
         .then(netRes => {
-          // Validasi sebelum disimpan ke cache
-          const isImage = req.destination === 'image';
-          const isSameOrigin = req.url.startsWith(self.location.origin);
-          const isStatusOK = netRes && netRes.ok && netRes.type === 'basic';
-          
-          if (isImage && isSameOrigin && isStatusOK) {
+          // Hanya simpan gambar dari /images/
+          if (req.url.includes('/images/') && netRes.status === 200) {
             const copy = netRes.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
           }
-          
           return netRes;
         })
         .catch(() => {
-          // Fallback jika offline
+          // Jika offline dan file gambar tidak ada
           if (req.destination === 'image') {
             return caches.match('/gbS.png');
           }

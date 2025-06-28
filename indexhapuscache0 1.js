@@ -255,7 +255,7 @@ function cekJumlahCacheGambar() {
   caches.open('produk-cache-v3').then(cache => {
     cache.keys().then(keys => {
       const jumlahGambar = keys.filter(req => req.url.includes('/images/')).length;
-      if (jumlahGambar > 20) {
+      if (jumlahGambar > 0) {
         const tombol = document.getElementById('btnClearCache');
         if (tombol) tombol.style.display = 'inline-block';
       }

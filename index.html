@@ -38,21 +38,25 @@
 
   <!-- Footer -->
   <footer>
-    <p>📦 Kumpulan Produk Pilihan — Difilter berdasarkan pengalaman 🔧</p>
-    <p>✅ Link aman, langsung menuju & checkout di TikTok Shop tanpa muter-muter 🛒</p>
-    <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
-    
-    <div class="footer-row">
-      <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
-        <div id="speakerFloating">📢</div>
-        <div id="teksMengambang">Ayo di pilih!!</div>
-      </div>
-      <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
+  <p>📦 Kumpulan Produk Pilihan — Difilter berdasarkan pengalaman 🔧</p>
+  <p>✅ Link aman, langsung menuju & checkout di TikTok Shop tanpa muter-muter 🛒</p>
+  <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
+  
+  <div class="footer-row">
+    <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
+      <div id="speakerFloating">📢</div>
+      <div id="teksMengambang">Ayo di pilih!!</div>
     </div>
-
-    <!-- ✅ Tombol Install -->
-    <p><a href="#" id="installLink" style="display:none;">📲 Install Cek Alat lite</a></p>
-  </footer>
+    <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
+  </div>
+  
+  <!-- Tambahan Info Cache -->
+  <p id="infoCacheGambar"></p>
+  
+  <!-- Tombol Install & Hapus Cache -->
+ <!-- <p><a href="#" id="installLink" style="display:none;">📲 Install Cek Alat lite</a></p>-->
+  <p><button id="btnClearCache" onclick="bersihkanGambarCache()" style="display:none;">🧹 Hapus Cache Gambar</button></p>
+</footer>
 
   <!-- Audio -->
   <audio id="klikAudio" src="sounds/klik.wav" preload="auto"></audio>
