@@ -1,4 +1,4 @@
-const CACHE_NAME = 'produk-cache-v1';
+const CACHE_NAME = 'produk-cache-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -7,49 +7,67 @@ const URLS_TO_CACHE = [
   '/manifest.json',
   '/gbS.png',
   '/sounds/klik.wav',
-  '/sounds/adamJualan.mp3'
-  // Tambahkan gambar utama lain jika perlu: misal '/images/gerinda/gerinda1.png'
+  '/sounds/adamJualan.mp3',
+  '/images/Icon-192.png',
+  '/images/Icon-512.png'
 ];
 
+// Saat pertama install
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-    .then(cache => {
-      console.log('📦 Caching semua file statis');
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('📦 Caching awal');
       return cache.addAll(URLS_TO_CACHE);
     })
   );
+  self.skipWaiting(); // Langsung aktif
 });
 
+// Saat aktif, hapus cache lama
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames =>
+    caches.keys().then(keys =>
       Promise.all(
-        cacheNames.map(name => {
-          if (name !== CACHE_NAME) {
-            console.log('🧹 Hapus cache lama:', name);
-            return caches.delete(name);
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log('🧹 Hapus cache lama:', key);
+            return caches.delete(key);
           }
         })
       )
     )
   );
+  self.clients.claim();
 });
 
+// Tangani permintaan (fetch)
 self.addEventListener('fetch', event => {
+  const req = event.request;
+  
+  // Hanya cache GET request
+  if (req.method !== 'GET') return;
+  
   event.respondWith(
-    caches.match(event.request)
-    .then(response => {
-      // Jika ada di cache, ambil dari cache
-      if (response) return response;
-      // Jika tidak, ambil dari internet
-      return fetch(event.request);
-    })
-    .catch(() => {
-      // Fallback jika offline dan file tidak ada
-      if (event.request.destination === 'image') {
-        return caches.match('/gbS.png');
-      }
+    caches.match(req).then(cacheRes => {
+      // Jika ada di cache, gunakan
+      if (cacheRes) return cacheRes;
+      
+      // Jika tidak, fetch dari jaringan
+      return fetch(req)
+        .then(netRes => {
+          // Hanya simpan gambar dari /images/
+          if (req.url.includes('/images/') && netRes.status === 200) {
+            const copy = netRes.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
+          }
+          return netRes;
+        })
+        .catch(() => {
+          // Jika offline dan file gambar tidak ada
+          if (req.destination === 'image') {
+            return caches.match('/gbS.png');
+          }
+        });
     })
   );
 });

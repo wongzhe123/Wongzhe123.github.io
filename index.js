@@ -1,4 +1,3 @@
-
 // === DATA DAN IDENTITAS ===
 let semuaProdukSemuaKategori = {};
 let semuaGambar = [], semuaProduk = [], indeksGambar = 0, indeksProduk = 0;
@@ -72,6 +71,10 @@ fetch('https://script.google.com/macros/s/AKfycbyr2e58IffNgMv1KtMlbg3mMqKL7d7dhv
     document.getElementById('pageviews').textContent = 'Gagal memuat';
   });
 
+// === CEGAH PULL TO REFRESH ===
+document.documentElement.style.overscrollBehaviorY = 'none';
+document.body.style.overscrollBehaviorY = 'none';
+
 // === POPUP PRODUK ===
 const popup = document.createElement('div');
 popup.id = 'popupGambar';
@@ -95,6 +98,8 @@ popup.innerHTML = `
   <button class="arrow-vert arrow-down">▼</button>
 `;
 document.body.appendChild(popup);
+
+popup.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
 
 function bukaPopup(i) {
   semuaProduk = semuaProdukSemuaKategori[kategoriAktif];
@@ -154,7 +159,9 @@ popup.addEventListener('touchstart', e => touchStartY = e.touches[0].clientY);
 popup.addEventListener('touchend', e => {
   const deltaY = e.changedTouches[0].clientY - touchStartY;
   if (deltaY < -30 && indeksProduk < semuaProduk.length - 1) bukaPopup(indeksProduk + 1);
-  else if (deltaY > 30 && indeksProduk > 0) bukaPopup(indeksProduk - 1);
+  
+ else if (deltaY > 30 && indeksProduk > 0) bukaPopup(indeksProduk - 1);
+
 });
 
 function navigasiProdukDenganScroll(e) {

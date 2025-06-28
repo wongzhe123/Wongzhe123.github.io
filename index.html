@@ -1,23 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#03ac0e">
-
+  <meta name="theme-color" content="#03ac0e">
   <meta name="color-scheme" content="light">
   <title> Cek Alat dan Sperpart Pilihan </title>
   <link rel="stylesheet" href="style.css" />
   <link rel="prefetch" href="gbS.png" as="image">
 </head>
 <body>
-   
   <h1>
-  <span class=" daun-glow">❤️</span>Rekomendasi Produk
-  <span class="daun-glow ">❤️</span>
-</h1>
-  
+    <span class="daun-glow">❤️</span>Rekomendasi Produk
+    <span class="daun-glow">❤️</span>
+  </h1>
+
   <!-- Emoji telunjuk -->
   <div id="pointer" class="pointer-anim">👇</div>
 
@@ -29,9 +28,6 @@
     <a href="#" onclick="tampilKategori('lain')">Lain-lain</a>
   </nav>
 
-
-  
-
   <!-- Kontainer Daftar Produk -->
   <div id="kontainerProduk">
     <div id="gerinda" class="kategori active"><ol></ol></div>
@@ -40,29 +36,29 @@
     <div id="lain" class="kategori"><ol></ol></div>
   </div>
 
-<!-- Footer -->
-<footer>
-  <p>📦 Kumpulan Produk Pilihan — Difilter berdasarkan pengalaman 🔧</p>
-  <p>✅ Link aman, langsung menuju & checkout di TikTok Shop tanpa muter-muter 🛒</p>
-  <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
-  
-  <div class="footer-row">
-    <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
-      <div id="speakerFloating">📢</div>
-      <div id="teksMengambang">Ayo di pilih!!</div>
+  <!-- Footer -->
+  <footer>
+    <p>📦 Kumpulan Produk Pilihan — Difilter berdasarkan pengalaman 🔧</p>
+    <p>✅ Link aman, langsung menuju & checkout di TikTok Shop tanpa muter-muter 🛒</p>
+    <p>👣 <a href="https://tiktok.com/@wongzhe123" target="_blank">Ikuti TikTok saya</a> | © 2025</p>
+    
+    <div class="footer-row">
+      <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
+        <div id="speakerFloating">📢</div>
+        <div id="teksMengambang">Ayo di pilih!!</div>
+      </div>
+      <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
     </div>
-    <p>📊 Total kunjungan: <span id="pageviews">...</span></p>
-  </div>
-  
-  <!-- ✅ Tombol Install -->
-  <p><a href="#" id="installLink" style="display:none;">📲 Install Cek Alat lite</a></p>
-</footer>
+
+    <!-- ✅ Tombol Install -->
+    <p><a href="#" id="installLink" style="display:none;">📲 Install Cek Alat lite</a></p>
+  </footer>
+
   <!-- Audio -->
   <audio id="klikAudio" src="sounds/klik.wav" preload="auto"></audio>
- <div id="speakerWrapper" onclick="putarPromo()" title="Klik untuk dengar promo!">
+  <audio id="promoAudio" src="sounds/promo.mp3" preload="auto"></audio>
 
   <!-- Script -->
   <script src="index.js"></script>
-
 </body>
 </html>
