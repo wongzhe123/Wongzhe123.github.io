@@ -252,27 +252,20 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // === CEK DAN BERSIHKAN CACHE GAMBAR ===
 function cekJumlahCacheGambar() {
   if (!('caches' in window)) return;
-  caches.open('produk-cache-v4').then(cache => {
+  caches.open('produk-cache-v3').then(cache => {
     cache.keys().then(keys => {
       const jumlahGambar = keys.filter(req => req.url.includes('/images/')).length;
-      
-      // Tampilkan jumlah cache gambar di footer
-      const info = document.getElementById('infoCacheGambar');
-      if (info) {
-        info.textContent = jumlahGambar > 0 ?
-          `🖼️ Cache gambar tersimpan: ${jumlahGambar}` :
-          '';
+      if (jumlahGambar > 20) {
+        const tombol = document.getElementById('btnClearCache');
+        if (tombol) tombol.style.display = 'inline-block';
       }
-      
-      // Tampilkan tombol hapus hanya jika cache gambar terlalu banyak
-      const tombol = document.getElementById('btnClearCache');
-      if (tombol) tombol.style.display = jumlahGambar > 10 ? 'inline-block' : 'none';
     });
   });
 }
+
 function bersihkanGambarCache() {
   if (!('caches' in window)) return alert('Browser tidak mendukung Cache API');
-  caches.open('produk-cache-v4').then(cache => {
+  caches.open('produk-cache-v3').then(cache => {
     cache.keys().then(keys => {
       let jumlah = 0;
       const hapusPromises = keys.map(req => {

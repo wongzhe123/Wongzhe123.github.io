@@ -1,4 +1,4 @@
-const CACHE_NAME = 'produk-cache-v4';
+const CACHE_NAME = 'produk-cache-v3';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
@@ -12,29 +12,39 @@ const URLS_TO_CACHE = [
   '/images/Icon-512.png'
 ];
 
-// Saat install: simpan file awal
+// Saat pertama install
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(URLS_TO_CACHE))
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('📦 Caching awal');
+      return cache.addAll(URLS_TO_CACHE);
+    })
   );
-  self.skipWaiting();
+  self.skipWaiting(); // Langsung aktif
 });
 
-// Saat aktif: hapus cache lama
+// Saat aktif, hapus cache lama
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      }))
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log('🧹 Hapus cache lama:', key);
+            return caches.delete(key);
+          }
+        })
+      )
     )
   );
   self.clients.claim();
 });
 
-// Saat fetch: ambil dari cache dulu
+// Tangani permintaan (fetch)
 self.addEventListener('fetch', event => {
   const req = event.request;
+  
+  // Hanya tangani permintaan GET
   if (req.method !== 'GET') return;
   
   event.respondWith(
@@ -43,12 +53,12 @@ self.addEventListener('fetch', event => {
       
       return fetch(req)
         .then(netRes => {
-          const isImage = req.url.includes('/images/');
-          const isDataJson = req.url.endsWith('/data.json');
+          // Validasi sebelum disimpan ke cache
+          const isImage = req.destination === 'image';
           const isSameOrigin = req.url.startsWith(self.location.origin);
           const isStatusOK = netRes && netRes.ok && netRes.type === 'basic';
           
-          if ((isImage || isDataJson) && isSameOrigin && isStatusOK) {
+          if (isImage && isSameOrigin && isStatusOK) {
             const copy = netRes.clone();
             caches.open(CACHE_NAME).then(cache => cache.put(req, copy));
           }
@@ -56,12 +66,9 @@ self.addEventListener('fetch', event => {
           return netRes;
         })
         .catch(() => {
-          if (req.url.includes('/images/')) {
+          // Fallback jika offline
+          if (req.destination === 'image') {
             return caches.match('/gbS.png');
-          } else if (req.url.endsWith('/data.json')) {
-            return new Response('{}', {
-              headers: { 'Content-Type': 'application/json' }
-            });
           }
         });
     })
