@@ -252,7 +252,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 // === CEK DAN BERSIHKAN CACHE GAMBAR ===
 function cekJumlahCacheGambar() {
   if (!('caches' in window)) return;
-  caches.open('produk-cache-v4').then(cache => {
+  caches.open('produk-cache-v5').then(cache => {
     cache.keys().then(keys => {
       const jumlahGambar = keys.filter(req => req.url.includes('/images/')).length;
       
@@ -272,7 +272,7 @@ function cekJumlahCacheGambar() {
 }
 function bersihkanGambarCache() {
   if (!('caches' in window)) return alert('Browser tidak mendukung Cache API');
-  caches.open('produk-cache-v4').then(cache => {
+  caches.open('produk-cache-v5').then(cache => {
     cache.keys().then(keys => {
       let jumlah = 0;
       const hapusPromises = keys.map(req => {
